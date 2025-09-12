@@ -20,7 +20,7 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
   ValueNotifier<double> get keyboardHeightNotifier =>
       _keyboardDismissPaddingNotifier;
 
-  Color get backgroundColor => appTheme.background;
+  Color get backgroundColor => appTheme.backgroundContainer;
 
   bool get isSafeArea => true;
 
@@ -176,7 +176,7 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
     );
     if (isTopSafeArea == false || isSafeArea == false) {
       return Container(
-        color: backgroundAppBarColor ?? appTheme.whiteText,
+        color: backgroundAppBarColor ?? appTheme.gray900,
         child: SafeArea(bottom: false, child: appbar),
       );
     }
@@ -204,9 +204,9 @@ abstract class BaseBlocPrimaryAppBarPageState<
     P extends BaseState,
     C extends BaseCubit<P>> extends BaseBlocPageState<S, P, C> {
   @override
-  Color? get titleAppBarColor => appTheme.whiteText;
+  Color? get titleAppBarColor => appTheme.gray900;
   @override
-  Color get backgroundColor => appTheme.whiteText;
+  Color get backgroundColor => appTheme.gray900;
   @override
   Color? get backgroundAppBarColor => appTheme.primaryColor;
   @override

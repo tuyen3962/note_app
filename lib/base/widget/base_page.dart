@@ -10,7 +10,7 @@ abstract class BasePageState<S extends StatefulWidget, C extends BaseController>
 
   final _keyboardDissmissPaddingNotifier = ValueNotifier<double>(0.0);
 
-  Color get backgroundColor => appTheme.background;
+  Color get backgroundColor => appTheme.backgroundContainer;
 
   bool get isSafeArea => true;
 
