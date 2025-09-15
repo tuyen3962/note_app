@@ -43,8 +43,8 @@ dependencies:
   vector_graphics: ^1.1.11+1
   path_drawing: ^1.0.1
   device_apps: ^2.2.0
+  hive: ^2.2.3
   # hive: ^4.0.0
-  # isar_flutter_libs: ^4.0.0-dev.13
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +56,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.6.0
   auto_route_generator: ^8.1.0
   injectable_generator: ^2.6.2
-  # hive_flutter: ^4.0.0
+  hive_generator: ^2.0.1
 
 flutter:
   uses-material-design: true
@@ -64,6 +64,66 @@ flutter:
   assets:
     - assets/icons/
     - assets/lang/
+    - assets/fonts/
+
+  fonts:
+    - family: Handlee
+      fonts:
+        - asset: assets/fonts/handlee/Handlee-Regular.ttf
+    - family: JustAnotherHand
+      fonts:
+        - asset: assets/fonts/Just_Another_Hand/JustAnotherHand-Regular.ttf
+    - family: Licorice
+      fonts:
+        - asset: assets/fonts/Licorice/Licorice-Regular.ttf
+    - family: Mali
+      fonts:
+        - asset: assets/fonts/Mali/Mali-Regular.ttf
+        - asset: assets/fonts/Mali/Mali-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Mali/Mali-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Mali/Mali-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/Mali/Mali-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Mali/Mali-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Mali/Mali-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Mali/Mali-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Mali/Mali-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Mali/Mali-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Mali/Mali-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Mali/Mali-BoldItalic.ttf
+          weight: 700
+          style: italic
+    - family: MeowScript
+      fonts:
+        - asset: assets/fonts/Meow_Script/MeowScript-Regular.ttf
+    - family: Miniver
+      fonts:
+        - asset: assets/fonts/Miniver/Miniver-Regular.ttf
+    - family: NanumBrushScript
+      fonts:
+        - asset: assets/fonts/Nanum_Brush_Script/NanumBrushScript-Regular.ttf
+    - family: Niconne
+      fonts:
+        - asset: assets/fonts/Niconne/Niconne-Regular.ttf
+    - family: Norican
+      fonts:
+        - asset: assets/fonts/Norican/Norican-Regular.ttf
+    - family: SendFlowers
+      fonts:
+        - asset: assets/fonts/Send_Flowers/SendFlowers-Regular.ttf
 
 flutter_gen:
   integrations:

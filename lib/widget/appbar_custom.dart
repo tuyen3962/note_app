@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/config/lang/locale_keys.g.dart';
+import 'package:note_app/config/theme/style/app_style.dart';
 import 'package:note_app/config/theme/style/style_theme.dart';
 import 'package:note_app/extension.dart';
 import 'package:note_app/gen/assets.gen.dart';
@@ -60,7 +61,8 @@ class _AppBarCustomState extends State<AppBarCustom> {
   @override
   Widget build(BuildContext context) {
     final appNameText = Text(LocaleKeys.notification_text.tr(),
-        style: AppStyle.medium12(color: appTheme.whiteText.withOpacity(.8)));
+        style: AppStyle.style
+            .regular(size: 12, color: appTheme.whiteText.withOpacity(.8)));
     return Container(
       color: widget.backgroundColor,
       width: double.infinity,
@@ -103,7 +105,7 @@ class _AppBarCustomState extends State<AppBarCustom> {
                 widget.titleView ??
                     Text(
                       widget.title ?? '',
-                      style: widget.titleStyle ?? AppStyle.bold18(),
+                      style: widget.titleStyle ?? AppStyle.style.bold(size: 18),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       textAlign: (widget.centerTitle ?? false)

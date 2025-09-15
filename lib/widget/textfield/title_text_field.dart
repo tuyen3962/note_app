@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:note_app/config/constant/emoji_unicode.dart';
+import 'package:note_app/config/theme/style/app_style.dart';
 import 'package:note_app/config/theme/style/style_theme.dart';
 import 'package:note_app/extension.dart';
 import 'package:note_app/main.dart';
@@ -156,13 +157,14 @@ class TitleTextField extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(fieldNode?.title ?? title ?? '',
-                  style: labelStyle ?? AppStyle.normal14()),
+                  style: labelStyle ?? AppStyle.style.regular(size: 14)),
               SizedBox(width: 4.w),
               if (showRequired && (fieldNode?.isRequired ?? isRequired))
                 Text(
                   "*",
                   style: labelStyle?.copyWith(color: appTheme.errorColor) ??
-                      AppStyle.regular14(color: appTheme.errorColor),
+                      AppStyle.style
+                          .regular(size: 14, color: appTheme.errorColor),
                   textAlign: TextAlign.end,
                 )
             ],
@@ -203,7 +205,7 @@ class TitleTextField extends StatelessWidget {
             if (includeDenyEmoji) ...formatterEmojiDeny,
           ],
           focusNode: fieldNode?.node ?? node,
-          style: textStyle ?? AppStyle.regular16(),
+          style: textStyle ?? AppStyle.style.regular(size: 16),
           maxLines: maxLine,
           minLines: minLine,
           readOnly: !canEdit,
@@ -233,9 +235,10 @@ class TitleTextField extends StatelessWidget {
             //         : null,
             isDense: false,
             errorText: hasError ? errorText : null,
-            errorStyle: AppStyle.regular12(color: appTheme.errorColor),
+            errorStyle:
+                AppStyle.style.regular(size: 12, color: appTheme.errorColor),
             contentPadding: textFieldPadding ?? padding(all: 12),
-            floatingLabelStyle: AppStyle.regular12(),
+            floatingLabelStyle: AppStyle.style.regular(size: 12),
             prefixIcon: prefix,
             prefixIconConstraints: prefixIconConstraints,
             hintText: showHint
@@ -245,9 +248,10 @@ class TitleTextField extends StatelessWidget {
                     : null,
             labelStyle: hintStyle ??
                 // titleStyle ??
-                AppStyle.normal14(color: appTheme.primaryColor),
+                AppStyle.style.regular(size: 14, color: appTheme.primaryColor),
             hintStyle: hintStyle ??
-                AppStyle.regular16(color: appTheme.background)
+                AppStyle.style
+                    .regular(size: 16, color: appTheme.background)
                     .copyWith(color: appTheme.hintColor),
             suffixIcon: suffixIcon ??
                 ClearIconText(controller: fieldNode?.textCtrl ?? controller),
@@ -277,7 +281,7 @@ class TitleTextField extends StatelessWidget {
                     padding: padding(vertical: 4),
                     child: Text(
                       "${value.text.length}/${fieldNode?.maxLength ?? maxLength ?? 0}",
-                      style: AppStyle.regular12(),
+                      style: AppStyle.style.regular(size: 12),
                     ),
                   )))
       ],

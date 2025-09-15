@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:note_app/config/constant/emoji_unicode.dart';
+import 'package:note_app/config/theme/style/app_style.dart';
 import 'package:note_app/config/theme/style/style_theme.dart';
 import 'package:note_app/extension.dart';
 import 'package:note_app/main.dart';
@@ -119,13 +120,15 @@ class TextAreaField extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(fieldNode.title, style: labelStyle ?? AppStyle.regular14()),
+              Text(fieldNode.title,
+                  style: labelStyle ?? AppStyle.style.regular(size: 14)),
               SizedBox(width: 4.w),
               if (showRequired && (fieldNode.isRequired))
                 Text(
                   "*",
                   style: labelStyle?.copyWith(color: appTheme.errorColor) ??
-                      AppStyle.regular14(color: appTheme.errorColor),
+                      AppStyle.style
+                          .regular(size: 14, color: appTheme.errorColor),
                   textAlign: TextAlign.end,
                 )
             ],
@@ -150,7 +153,7 @@ class TextAreaField extends StatelessWidget {
                 if (includeDenyEmoji) ...formatterEmojiDeny,
               ],
               focusNode: fieldNode.node,
-              style: textStyle ?? AppStyle.regular16(),
+              style: textStyle ?? AppStyle.style.regular(size: 16),
               maxLines: maxLine,
               autofocus: false,
               minLines: minLine,
@@ -162,12 +165,14 @@ class TextAreaField extends StatelessWidget {
                 filled: true,
                 fillColor: backgroundColor ?? appTheme.background,
                 errorText: hasError ? errorText : null,
-                errorStyle: AppStyle.regular12(color: appTheme.errorColor),
+                errorStyle: AppStyle.style
+                    .regular(size: 12, color: appTheme.errorColor),
                 contentPadding:
                     textFieldPadding ?? padding(vertical: 8, horizontal: 12),
                 hintText: hint,
                 hintStyle: hintStyle ??
-                    AppStyle.regular16(color: appTheme.backgroundTextField)
+                    AppStyle.style
+                        .regular(size: 16, color: appTheme.backgroundTextField)
                         .copyWith(color: appTheme.hintColor),
                 errorMaxLines: 3,
                 errorBorder: border.copyWith(
@@ -195,8 +200,8 @@ class TextAreaField extends StatelessWidget {
                     padding: padding(vertical: 4),
                     child: Text(
                       "${value.text.length}/${fieldNode.maxLength}",
-                      style: AppStyle.regular12(
-                          color: appTheme.backgroundContainer),
+                      style: AppStyle.style.regular(
+                          size: 12, color: appTheme.backgroundContainer),
                     ),
                   )))
       ],

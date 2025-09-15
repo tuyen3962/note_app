@@ -8,8 +8,11 @@ abstract class BaseAppTheme<A extends BaseThemeData, B extends BaseThemeData> {
 
   B get darkTheme;
 
+  String get fontFamily => 'Mali';
+
   late final ThemeData _lightTheme = ThemeData(
     primaryColor: lightTheme.primaryColor,
+    fontFamily: fontFamily,
     // backgroundColor: lightTheme.background,
     dividerColor: lightTheme.dividerColor,
     hintColor: lightTheme.hintColor,
@@ -20,6 +23,7 @@ abstract class BaseAppTheme<A extends BaseThemeData, B extends BaseThemeData> {
 
   late final ThemeData _darkTheme = ThemeData(
     primaryColor: darkTheme.primaryColor,
+    fontFamily: fontFamily,
     // backgroundColor: darkTheme.background,
     dividerColor: darkTheme.dividerColor,
     hintColor: darkTheme.hintColor,

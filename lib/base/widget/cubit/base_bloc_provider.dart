@@ -73,14 +73,8 @@ abstract class BaseBlocViewState<S extends StatefulWidget, P extends BaseState,
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<T, P>(
-        listener: (context, state) => onStateChange(state),
-        buildWhen: buildWhen,
-        listenWhen: listenWhen,
-        builder: (context, state) {
-          final cubit = context.read<T>();
-          return buildView(context, cubit, state);
-        });
+    final cubit = context.read<T>();
+    return buildView(context, cubit);
   }
 
   /// Takes the previous `state` and the current `state` and is responsible for
@@ -95,5 +89,5 @@ abstract class BaseBlocViewState<S extends StatefulWidget, P extends BaseState,
 
   void onStateChange(P newState) {}
 
-  Widget buildView(BuildContext context, T cubit, P state);
+  Widget buildView(BuildContext context, T cubit);
 }

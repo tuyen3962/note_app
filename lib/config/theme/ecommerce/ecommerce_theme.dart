@@ -17,13 +17,7 @@ class EcommerceAppLightThemeDefault extends BaseThemeData {
   Color get primaryColor => const Color(0xFF0F172A);
 
   @override
-  Color get secondaryColor => const Color(0xFFFF9F29);
-
-  @override
   Color get primaryTextColor => Colors.white;
-
-  @override
-  Color get thirdColor => const Color(0xFF0F172A);
 
   @override
   Color get fadeTextColor => const Color(0xFF94A3B8);
