@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'app_service.dart';
 
-@injectable
+@lazySingleton
 class HiveController {
   List<BaseHiveStorage> get storages => [];
 

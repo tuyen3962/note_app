@@ -18,14 +18,14 @@ abstract class _$AppRouter extends RootStackRouter {
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SplashScreen(),
+        child: const SplashPage(),
       );
-    },
+    }
   };
 }
 
 /// generated route for
-/// [SplashScreen]
+/// [SplashPage]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
       : super(
