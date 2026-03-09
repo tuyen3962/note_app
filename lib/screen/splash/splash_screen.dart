@@ -32,6 +32,6 @@ class SplashScreenState
     extends BaseBlocPageState<SplashScreen, SplashState, SplashCubit> {
   @override
   Widget buildView(BuildContext context, SplashCubit cubit) {
-    return super.buildView(context, cubit);
+    return const SizedBox();
   }
 }

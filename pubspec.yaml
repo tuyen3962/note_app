@@ -44,6 +44,7 @@ dependencies:
   path_drawing: ^1.0.1
   device_apps: ^2.2.0
   hive: ^2.2.3
+  copy_with_extension: ^9.1.1
   # hive: ^4.0.0
 
 dev_dependencies:

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/config/theme/style/app_style.dart';
-import 'package:note_app/extension.dart';
 import 'package:note_app/main.dart';
 import 'package:note_app/utils/loading.dart';
 import 'package:note_app/widget/appbar_custom.dart';
-import 'package:note_app/widget/circle_item.dart';
 
-import '../../../config/theme/style/style_theme.dart';
 import 'cubit/base_bloc_provider.dart';
 import 'cubit/base_cubit.dart';
 import 'cubit/base_state.dart';
@@ -22,6 +19,7 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
   ValueNotifier<double> get keyboardHeightNotifier =>
       _keyboardDismissPaddingNotifier;
 
+  // This field validate the user in the group of univini
   Color get backgroundColor => appTheme.background;
 
   bool get isSafeArea => true;
@@ -84,7 +82,7 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
   Color get pageBackgroundColor => backgroundColor;
 
   @override
-  Widget buildView(BuildContext context, C cubit) {
+  Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _keyboardDismissPaddingNotifier,
       builder: (context, bottomPadding, child) => GestureDetector(
@@ -112,31 +110,21 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
                   unfocusNode(_);
                 },
                 behavior: HitTestBehavior.opaque,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    SafeArea(
-                      left: isLeftSafeArea ?? isSafeArea,
-                      right: isRightSafeArea ?? isSafeArea,
-                      top: isTopSafeArea ?? isSafeArea,
-                      bottom: isBottomSafeArea ?? isSafeArea,
-                      child: Column(
-                        crossAxisAlignment: crossAxisAlignment,
-                        children: [
-                          GestureDetector(
-                              onTap: FocusScope.of(context).unfocus,
-                              child: buildAppBar(context, cubit)),
-                          Expanded(
-                              child: hasBackgroundBody
-                                  ? buildBackgroundBody(
-                                      buildBody(context, cubit))
-                                  : buildBody(context, cubit)),
-                          buildBottomView(context, cubit),
-                        ],
-                      ),
-                    ),
-                    ...buildBackgroundView(context, cubit),
-                  ],
+                child: SafeArea(
+                  left: isLeftSafeArea ?? isSafeArea,
+                  right: isRightSafeArea ?? isSafeArea,
+                  top: isTopSafeArea ?? isSafeArea,
+                  bottom: isBottomSafeArea ?? isSafeArea,
+                  child: Column(
+                    crossAxisAlignment: crossAxisAlignment,
+                    children: [
+                      GestureDetector(
+                          onTap: FocusScope.of(context).unfocus,
+                          child: buildAppBar(context)),
+                      Expanded(child: buildBody(context)),
+                      buildBottomView(context),
+                    ],
+                  ),
                 )),
           ),
         ),
@@ -144,16 +132,25 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
     );
   }
 
-  Widget buildBlocView(
-      {required Widget Function(BuildContext context, P state) viewBuilder}) {
-    return BlocBuilder<C, P>(bloc: cubit, builder: viewBuilder);
+  Widget blocBuilder({
+    required Widget Function(BuildContext context, P state) viewBuilder,
+    bool Function(P previous, P current)? buildWhen,
+  }) {
+    return BlocBuilder<C, P>(
+        buildWhen: buildWhen, bloc: cubit, builder: viewBuilder);
   }
 
-  Widget buildBlocConsumerView(
+  Widget blocConsumer(
       {required Widget Function(BuildContext context, P state) viewBuilder,
-      required void Function(BuildContext context, P state) listener}) {
+      required void Function(BuildContext context, P state) listener,
+      bool Function(P previous, P current)? listenWhen,
+      bool Function(P previous, P current)? buildWhen}) {
     return BlocConsumer<C, P>(
-        bloc: cubit, builder: viewBuilder, listener: listener);
+        bloc: cubit,
+        builder: viewBuilder,
+        listener: listener,
+        buildWhen: buildWhen,
+        listenWhen: listenWhen);
   }
 
   void onPopInvoke() {}
@@ -166,39 +163,17 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
     }
   }
 
-  List<Widget> buildBackgroundView(BuildContext context, C cubit) => [];
-
-  bool get hasBackgroundBody => false;
-
-  Widget buildBackgroundBody(Widget child) => SizedBox(child: child);
-
   Color? get backgroundAppBarColor => null;
 
   Color? get titleAppBarColor => null;
 
   bool get isBackIcon => true;
 
-  String? getScreenTitle(C cubit) => null;
-
-  List<Widget>? appBarActions(C cubit) => [];
-
-  Widget? appBarBacKIcon(C cubit) => CircleItem(
-      onTap: onBack,
-      padding: padding(all: 6),
-      backgroundColor: appTheme.gray50.withOpacity(.16),
-      child: Icon(Icons.arrow_back_ios_new_rounded,
-          color: appTheme.gray50, size: 20));
-
-  Widget? appBarTitle(C cubit) => null;
-
-  Widget buildAppBar(BuildContext context, C cubit) {
+  Widget buildAppBar(BuildContext context) {
     final appbar = AppBarCustom(
-      title: getScreenTitle.call(cubit) ?? title,
+      title: title,
       showBack: showBack,
       onBack: onBack,
-      titleView: appBarTitle(cubit),
-      actions: appBarActions(cubit),
-      backIcon: appBarBacKIcon(cubit),
       isBackIcon: isBackIcon,
       backColor: titleAppBarColor,
       backgroundColor: backgroundAppBarColor,
@@ -206,7 +181,7 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
     );
     if (isTopSafeArea == false || isSafeArea == false) {
       return Container(
-        color: backgroundAppBarColor ?? appTheme.gray50,
+        color: backgroundAppBarColor ?? appTheme.background,
         child: SafeArea(bottom: false, child: appbar),
       );
     }
@@ -214,39 +189,54 @@ abstract class BaseBlocPageState<S extends StatefulWidget, P extends BaseState,
     return appbar;
   }
 
-  Widget buildBody(BuildContext context, C cubit) => Container();
+  Widget buildBody(BuildContext context) => Container();
 
-  Widget buildBottomView(BuildContext context, C cubit) => const SizedBox();
+  Widget buildBottomView(BuildContext context) => const SizedBox();
 }
 
-abstract class BaseBlocNoAppBarPageState<
-    S extends StatefulWidget,
-    P extends BaseState,
-    C extends BaseCubit<P>> extends BaseBlocPageState<S, P, C> {
-  @override
-  Widget buildAppBar(BuildContext context, C cubit) => const SizedBox();
-}
+abstract class BaseBlocNoAppBar<S extends StatefulWidget, P extends BaseState,
+        C extends BaseCubit<P>> extends BaseBlocPageState<S, P, C>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController animationController;
+  late final Animation<double> opacityAnimation;
 
-abstract class BaseBlocPrimaryAppBarPageState<
-    S extends StatefulWidget,
-    P extends BaseState,
-    C extends BaseCubit<P>> extends BaseBlocPageState<S, P, C> {
-  @override
-  Color? get titleAppBarColor => appTheme.gray50;
-  @override
-  Color get backgroundColor => appTheme.gray50;
-  @override
-  Color? get backgroundAppBarColor => appTheme.primaryColor;
-  @override
-  bool? get isTopSafeArea => false;
+  final scrollController = ScrollController();
 
   @override
-  Widget? appBarBacKIcon(C cubit) {
-    return CircleItem(
-        onTap: onBack,
-        padding: padding(all: 6),
-        backgroundColor: appTheme.gray50.withOpacity(.16),
-        child: Icon(Icons.arrow_back_ios_new_rounded,
-            color: appTheme.gray50, size: 20));
+  void initState() {
+    super.initState();
+    animationController = AnimationController(vsync: this);
+    opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut));
+    scrollController.addListener(_scrollListener);
   }
+
+  void _scrollListener() {
+    animationController.value = scrollController.offset / 100;
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    scrollController.removeListener(_scrollListener);
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  List<Widget> buildBackgroundView(BuildContext context) => [
+        Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AnimatedBuilder(
+              animation: opacityAnimation,
+              builder: (context, child) => Opacity(
+                  opacity: opacityAnimation.value,
+                  child: Container(
+                      height: MediaQuery.of(context).padding.top,
+                      color: appTheme.background,
+                      width: double.infinity)),
+            )),
+      ];
 }
